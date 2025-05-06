@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adif - Infraestructura Ferroviaria</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .info-interes-img {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      max-height: 420px;
+    }
+
+    .info-interes-img img {
+      width: 100%;
+      height: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 22px;
+      display: block;
+    }
+
+    .adif-cifras-section {
+      background: #f8f9fa;
+      padding: 3.5rem 0 2.5rem 0;
+      margin-bottom: 0.5rem;
+    }
+    .adif-cifras-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #20603a;
+      text-align: center;
+      margin-bottom: 2.2rem;
+      letter-spacing: -1px;
+    }
+    .adif-cifras-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .adif-cifras-item {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px 0 rgba(32,96,58,0.06);
+      padding: 2.2rem 1.2rem 1.5rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 160px;
+      transition: box-shadow 0.2s;
+      min-width: 0;
+      max-width: 320px;
+    }
+    .adif-cifras-item:hover {
+      box-shadow: 0 4px 24px 0 rgba(32,96,58,0.13);
+    }
+    .adif-cifras-num {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #232323;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .adif-cifras-unit {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #20603a;
+      margin-left: 0.2rem;
+    }
+    .adif-cifras-desc {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.05rem;
+      color: #555;
+      text-align: center;
+      margin-top: 0.2rem;
+      font-weight: 400;
+    }
+    @media (max-width: 900px) {
+      .adif-cifras-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .adif-cifras-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .adif-cifras-section {
+        padding: 2rem 0 1.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="menu-btn" id="open-menu" aria-label="Abrir menú">
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect y="6" width="28" height="2.5" rx="1.25" fill="#2d5c3a"/>
+        <rect y="13" width="28" height="2.5" rx="1.25" fill="#2d5c3a"/>
+        <rect y="20" width="28" height="2.5" rx="1.25" fill="#2d5c3a"/>
+      </svg>
+    </button>
+    <div class="header-logos">
+      <img src="assets/logoMinisterio.png" alt="Ministerio de Transportes" class="logo-header logo-ministerio" />
+      <img src="assets/logoadif.png" alt="Logo Adif" class="logo-header logo-adif" />
+      <img src="assets/logounioneuropea.png" alt="Unión Europea" class="logo-header logo-ue" />
+    </div>
+    <nav class="main-menu">
+      <ul>
+        <li><a href="#">Personas</a></li>
+        <li><a href="#">Empresas</a></li>
+        <li><a href="#">Prensa</a></li>
+        <li><a href="#">Contratación</a></li>
+        <li class="pipe">|</li>
+        <li><a href="#">Empleo público</a></li>
+      </ul>
+      <div class="menu-actions">
+        <div class="lang-select">
+          <button type="button" id="open-lang-modal" class="lang-btn icon-only" aria-label="Seleccionar idioma">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#20603a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+          </button>
+          <div id="lang-modal" class="lang-modal lang-side-panel">
+            <div class="lang-side-panel-content">
+              <button class="lang-modal-close" id="close-lang-modal" aria-label="Cerrar panel">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="7" y1="7" x2="21" y2="21" stroke="#232323" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="21" y1="7" x2="7" y2="21" stroke="#232323" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <h2 class="lang-modal-title">Selecciona un idioma y una región</h2>
+              <div class="lang-modal-list">
+                <button class="lang-modal-item" data-lang="ca">Català</button>
+                <button class="lang-modal-item" data-lang="en">English</button>
+                <button class="lang-modal-item" data-lang="es">Castellano</button>
+                <button class="lang-modal-item" data-lang="eu">Euskara</button>
+                <button class="lang-modal-item" data-lang="gl">Galego</button>
+              </div>
+            </div>
+            <div id="lang-modal-overlay" class="lang-modal-overlay"></div>
+          </div>
+        </div>
+        <button class="header-search-btn" id="open-search-modal" aria-label="Buscar en la web">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="8" stroke="#20603a" stroke-width="2"/>
+            <line x1="19.5" y1="19.5" x2="15.5" y2="15.5" stroke="#20603a" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div id="search-modal" class="search-modal search-side-panel">
+        <div class="search-side-panel-content">
+          <button class="search-modal-close" id="close-search-modal" aria-label="Cerrar panel">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="7" y1="7" x2="21" y2="21" stroke="#232323" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="21" y1="7" x2="7" y2="21" stroke="#232323" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h2 class="search-modal-title">Buscar en la web</h2>
+          <div class="search-modal-form">
+            <input type="text" class="search-modal-input" id="search-input" placeholder="¿Qué estás buscando?" autocomplete="off" />
+            <button type="button" class="search-modal-btn">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="10" r="8" stroke="#ffffff" stroke-width="2"/>
+                <line x1="19.5" y1="19.5" x2="15.5" y2="15.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Buscar
+            </button>
+          </div>
+        </div>
+        <div id="search-modal-overlay" class="search-modal-overlay"></div>
+      </div>
+    </nav>
+  </header>
+  <div id="side-menu" class="side-menu">
+    <div class="side-menu-header">
+      <span>Cerrar</span>
+      <button id="close-menu" aria-label="Cerrar menú">
+        <!-- Icono cerrar (SVG temporal, se puede sustituir por React Icon) -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="7" y1="7" x2="21" y2="21" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="21" y1="7" x2="7" y2="21" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="side-menu-list">
+      <li>Sobre Adif <span class="arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></span></li>
+      <li>Comunicación y Prensa <span class="arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></span></li>
+      <li>Información al usuario <span class="arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></span></li>
+      <li>Productos y servicios <span class="arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></span></li>
+      <li>Empresas y contratación <span class="arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></span></li>
+      <li>Financiación Europea <span class="arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></span></li>
+      <li>Empleo y Formación <span class="arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></span></li>
+    </ul>
+  </div>
+  <div id="menu-overlay" class="menu-overlay"></div>
+  <main class="main-hero-full">
+    <section class="hero hero-full">
+      <div class="hero-bg-illustration">
+        <img src="assets/imgagenhome.png" alt="Imagen fondo home" />
+      </div>
+      <div class="hero-content">
+        <div class="hero-search-row">
+          <form class="hero-search-bar" autocomplete="off">
+            <div class="hero-search-dropdown">
+              <input type="text" class="hero-search-input" id="hero-station-search" placeholder="Busca tu estación" autocomplete="off" />
+              <ul id="hero-station-suggestions" class="hero-station-suggestions"></ul>
+            </div>
+            <button type="submit" class="hero-search-btn">Buscar</button>
+            <button type="button" class="estado-red-btn hero-estado-btn">
+              <span class="estado-red-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="11" r="9" stroke="#fff" stroke-width="2" fill="none"/>
+                  <text x="11" y="16" text-anchor="middle" font-size="13" font-family="Montserrat, Arial, sans-serif" fill="#fff">i</text>
+                </svg>
+              </span>
+              <span class="estado-red-text">Estado de la red</span>
+            </button>
+          </form>
+        </div>
+        <h1 class="hero-title">Impulsando la movilidad sostenible en España</h1>
+        <p class="hero-desc">Gestión, innovación y desarrollo de la infraestructura ferroviaria nacional.</p>
+      </div>
+    </section>
+    <section class="search-section" style="display:none"></section>
+    <section class="actualidad-section">
+      <h2 class="actualidad-title">Actualidad</h2>
+      <div class="actualidad-grid">
+        <div class="media-card">
+          <div class="media-card-img">
+            <img src="assets/2.jpg" alt="Actualidad 1" />
+          </div>
+          <div class="media-card-content">
+            <h2>Desplegamos la tecnología más avanzada para la gestión del tráfico</h2>
+            <p>Instalaremos un nuevo Control del Tráfico Centralizado (CTC) en ...</p>
+            <button class="media-card-link">Leer más</button>
+          </div>
+        </div>
+        <div class="media-card">
+          <div class="media-card-img">
+            <img src="assets/3.jpg" alt="Actualidad 2" />
+          </div>
+          <div class="media-card-content">
+            <h2>Redefiniendo Atocha: hacia una estación del futuro</h2>
+            <p>Modernidad, accesibilidad y sostenibilidad: La estación de Puerta de Atocha-Almudena Grandes aborda un ambicioso proceso de transformación.</p>
+            <button class="media-card-link">Leer más</button>
+          </div>
+        </div>
+        <div class="media-card">
+          <div class="media-card-img">
+            <img src="assets/4.jpg" alt="Actualidad 3" />
+          </div>
+          <div class="media-card-content">
+            <h2>Adif impulsa la sostenibilidad</h2>
+            <p>En el marco de su compromiso con la eficiencia energética, Adif comenzará en septiembre la instalación de marquesinas fotovoltaicas en 12 estaciones de cercanías de la...</p>
+            <button class="media-card-link">Leer más</button>
+          </div>
+        </div>
+        <div class="media-card">
+          <div class="media-card-img">
+            <img src="assets/5.jpg" alt="Actualidad 4" />
+          </div>
+          <div class="media-card-content">
+            <h2>Adif pondrá en marcha un nuevo sistema de detección inteligente</h2>
+            <p>Con el objetivo de mejorar la seguridad y la ...</p>
+            <button class="media-card-link">Leer más</button>
+          </div>
+        </div>
+      </div>
+      <nav class="actualidad-paginador" aria-label="Paginador de actualidad">
+        <button class="actualidad-page active">1</button>
+        <button class="actualidad-page">2</button>
+        <button class="actualidad-page">3</button>
+        <span class="actualidad-page ellipsis">…</span>
+        <button class="actualidad-page">Siguiente</button>
+      </nav>
+    </section>
+    <section class="notas-prensa-section">
+      <h2 class="notas-prensa-title">Notas de prensa</h2>
+      <div class="notas-prensa-arrows-wrapper">
+        <button class="notas-prensa-arrow notas-prensa-arrow-left" aria-label="Anterior noticia">
+          <span class="notas-prensa-arrow-circle">
+            <img src="assets/arrow.png" alt="Anterior" class="notas-prensa-arrow-img" />
+          </span>
+        </button>
+        <div class="notas-prensa-grid">
+          <div class="notas-prensa-card">
+            <img src="assets/7.jpg" alt="Noticia 1" class="notas-prensa-img" />
+            <div class="notas-prensa-content">
+              <h3 class="notas-prensa-headline">Nuevo récord de puntualidad en la red de alta velocidad</h3>
+              <div class="notas-prensa-subtitle">Publicado el 10 de junio de 2024</div>
+              <p class="notas-prensa-desc">La red de alta velocidad española alcanza un 99,8% de puntualidad en el primer semestre del año, consolidando su liderazgo europeo.</p>
+              <button class="notas-prensa-btn">Leer noticia</button>
+            </div>
+          </div>
+          <div class="notas-prensa-card">
+            <img src="assets/8.jpg" alt="Noticia 2" class="notas-prensa-img" />
+            <div class="notas-prensa-content">
+              <h3 class="notas-prensa-headline">Modernización de la estación de Puerta de Atocha</h3>
+              <div class="notas-prensa-subtitle">Publicado el 5 de junio de 2024</div>
+              <p class="notas-prensa-desc">Modernidad, accesibilidad y sostenibilidad: La estación de Puerta de Atocha-Almudena Grandes aborda un ambicioso proceso de transformación.</p>
+              <button class="notas-prensa-btn">Leer noticia</button>
+            </div>
+          </div>
+          <div class="notas-prensa-card">
+            <img src="assets/9.jpg" alt="Noticia 3" class="notas-prensa-img" />
+            <div class="notas-prensa-content">
+              <h3 class="notas-prensa-headline">Adif impulsa la sostenibilidad energética</h3>
+              <div class="notas-prensa-subtitle">Publicado el 1 de junio de 2024</div>
+              <p class="notas-prensa-desc">Adif instala paneles solares en 50 estaciones, reduciendo la huella de carbono y promoviendo la eficiencia energética en la red ferroviaria.</p>
+              <button class="notas-prensa-btn">Leer noticia</button>
+            </div>
+          </div>
+        </div>
+        <button class="notas-prensa-arrow notas-prensa-arrow-right" aria-label="Siguiente noticia">
+          <span class="notas-prensa-arrow-circle">
+            <img src="assets/arrow.png" alt="Siguiente" class="notas-prensa-arrow-img right" />
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <section class="info-interes-section">
+      <div class="info-interes-container">
+        <div class="info-interes-texto">
+          <h2 class="info-interes-titulo">Información de interés</h2>
+          <p class="info-interes-desc">Aquí puedes encontrar información relevante y actualizada sobre nuestros servicios, novedades y recursos útiles para usuarios y empresas. Mantente informado y accede a los detalles más importantes de Adif.</p>
+          <a href="#" class="info-interes-link">Leer más</a>
+        </div>
+        <div class="info-interes-img">
+          <img src="assets/10.jpg" alt="Información de interés">
+        </div>
+      </div>
+    </section>
+
+    <section class="info-interes-section info-interes-invertida">
+      <div class="info-interes-container">
+        <div class="info-interes-img">
+          <img src="assets/11.jpg" alt="Información de interés">
+        </div>
+        <div class="info-interes-texto">
+          <h2 class="info-interes-titulo">Otra información de interés</h2>
+          <p class="info-interes-desc">Aquí puedes añadir otra información relevante, recursos o novedades para los usuarios, pero con la imagen a la izquierda y el texto a la derecha para variar el diseño.</p>
+          <a href="#" class="info-interes-link">Leer más</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tercera sección: imagen derecha, texto izquierda -->
+    <section class="info-interes-section">
+      <div class="info-interes-container">
+        <div class="info-interes-texto">
+          <h2 class="info-interes-titulo">Más información de interés</h2>
+          <p class="info-interes-desc">Puedes seguir ampliando la información relevante para los usuarios, alternando el diseño para mantener el interés visual y la coherencia corporativa.</p>
+          <a href="#" class="info-interes-link">Leer más</a>
+        </div>
+        <div class="info-interes-img">
+          <img src="assets/12.jpg" alt="Más información de interés">
+        </div>
+      </div>
+    </section>
+
+    <!-- Cuarta sección: imagen izquierda, texto derecha -->
+    <section class="info-interes-section">
+      <div class="info-interes-container">
+        <div class="info-interes-img">
+          <img src="assets/13.jpg" alt="Información adicional de interés">
+        </div>
+        <div class="info-interes-texto">
+          <h2 class="info-interes-titulo">Información adicional de interés</h2>
+          <p class="info-interes-desc">Esta sección puede contener recursos, enlaces o novedades adicionales, siempre manteniendo el diseño intercalado y profesional.</p>
+          <a href="#" class="info-interes-link">Leer más</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Adif en cifras -->
+    <section class="adif-cifras-section">
+      <h2 class="adif-cifras-title">Adif en cifras</h2>
+      <div class="adif-cifras-grid">
+        <div class="adif-cifras-item">
+          <span class="adif-cifras-num">11.674,9 <span class="adif-cifras-unit">km</span></span>
+          <span class="adif-cifras-desc">de red ferroviaria</span>
+        </div>
+        <div class="adif-cifras-item">
+          <span class="adif-cifras-num">1.451 <span class="adif-cifras-unit">estaciones</span></span>
+          <span class="adif-cifras-desc">en toda España</span>
+        </div>
+        <div class="adif-cifras-item">
+          <span class="adif-cifras-num">45 <span class="adif-cifras-unit">terminales</span></span>
+          <span class="adif-cifras-desc">principales de transporte de mercancías</span>
+        </div>
+        <div class="adif-cifras-item">
+          <span class="adif-cifras-num">1.800.563 <span class="adif-cifras-unit">trenes</span></span>
+          <span class="adif-cifras-desc">en circulación 2024</span>
+        </div>
+      </div>
+    </section>
+    <!-- Fin sección Adif en cifras -->
+
+    <section class="enlaces-interes-section">
+      <h2 class="enlaces-interes-title">Enlaces de interés</h2>
+      <div class="enlaces-interes-wrapper">
+        <ul class="enlaces-acordeon">
+          <li>
+            <button class="acordeon-btn">
+              <span class="acordeon-icon"><i class="fa-solid fa-train"></i></span>
+              <span class="acordeon-titulo">Estaciones y servicios</span>
+              <span class="acordeon-flecha"></span>
+            </button>
+            <div class="acordeon-content">
+              <p>Consulta información sobre estaciones, servicios disponibles y horarios actualizados en toda la red ferroviaria.</p>
+            </div>
+          </li>
+          <li>
+            <button class="acordeon-btn">
+              <span class="acordeon-icon"><i class="fa-solid fa-network-wired"></i></span>
+              <span class="acordeon-titulo">Estado de la red</span>
+              <span class="acordeon-flecha"></span>
+            </button>
+            <div class="acordeon-content">
+              <p>Accede al estado en tiempo real de la red ferroviaria, incidencias y avisos importantes para los viajeros.</p>
+            </div>
+          </li>
+          <li>
+            <button class="acordeon-btn">
+              <span class="acordeon-icon"><i class="fa-solid fa-file-contract"></i></span>
+              <span class="acordeon-titulo">Contratación y licitaciones</span>
+              <span class="acordeon-flecha"></span>
+            </button>
+            <div class="acordeon-content">
+              <p>Información sobre procesos de contratación, licitaciones abiertas y requisitos para empresas colaboradoras.</p>
+            </div>
+          </li>
+          <li>
+            <button class="acordeon-btn">
+              <span class="acordeon-icon"><i class="fa-solid fa-headset"></i></span>
+              <span class="acordeon-titulo">Atención al cliente</span>
+              <span class="acordeon-flecha"></span>
+            </button>
+            <div class="acordeon-content">
+              <p>Contacta con nuestro equipo de atención al cliente para resolver dudas, sugerencias o reclamaciones.</p>
+            </div>
+          </li>
+          <li>
+            <button class="acordeon-btn">
+              <span class="acordeon-icon"><i class="fa-solid fa-bullhorn"></i></span>
+              <span class="acordeon-titulo">Prensa y comunicación</span>
+              <span class="acordeon-flecha"></span>
+            </button>
+            <div class="acordeon-content">
+              <p>Acceso a notas de prensa, comunicados oficiales y material multimedia para medios de comunicación.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <script>
+      // Acordeón: solo uno abierto a la vez
+      document.querySelectorAll('.enlaces-acordeon .acordeon-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const li = this.closest('li');
+          const open = li.classList.contains('open');
+          document.querySelectorAll('.enlaces-acordeon li').forEach(el => el.classList.remove('open'));
+          if (!open) li.classList.add('open');
+        });
+      });
+    </script>
+
+    <section class="enlaces-grid-section minimal-banda">
+      <div class="enlaces-banda">
+        <div class="enlace-banda-item">
+          <span class="enlace-banda-icon">
+            <img src="assets/logounioneuropea.png" alt="Unión Europea" style="height: 2.6rem; width: auto; display: block;" />
+          </span>
+          <span class="enlace-banda-label">FONDOS EUROPEOS</span>
+        </div>
+        <div class="enlace-banda-item">
+          <span class="enlace-banda-icon"><i class="fa-regular fa-hand-pointer"></i></span>
+          <span class="enlace-banda-label">SEDE ELECTRÓNICA</span>
+        </div>
+        <div class="enlace-banda-item">
+          <span class="enlace-banda-icon"><i class="fa-regular fa-envelope"></i></span>
+          <span class="enlace-banda-label">CANAL ÉTICO</span>
+        </div>
+        <div class="enlace-banda-item">
+          <span class="enlace-banda-icon"><i class="fa-solid fa-train-tram"></i></span>
+          <span class="enlace-banda-label">ADIF AV</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col footer-col-logo">
+        <img src="assets/logoadifblanco.png" alt="Logo ADIF" class="footer-logo">
+        <p class="footer-description">Somos una entidad pública empresarial adscrita al Ministerio de Transportes y Movilidad Sostenible.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><img src="assets/facebook.svg" alt="Facebook" /></a>
+          <a href="#" aria-label="Instagram"><img src="assets/instagram.svg" alt="Instagram" /></a>
+          <a href="#" aria-label="X (Twitter)"><img src="assets/x.svg" alt="X (Twitter)" /></a>
+          <a href="#" aria-label="LinkedIn"><img src="assets/linkedin.svg" alt="LinkedIn" /></a>
+          <a href="#" aria-label="YouTube"><img src="assets/youtube.svg" alt="YouTube" /></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>PERSONAS</h3>
+        <ul>
+          <li>Estado de la red</li>
+          <li>Estaciones</li>
+          <li>Información general de la Red Ferroviaria</li>
+          <li>Trabajar en Adif</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>EMPRESAS</h3>
+        <ul>
+          <li>Facturación electrónica</li>
+          <li>Red ferroviaria</li>
+          <li>Actividad internacional</li>
+          <li>Comercialización de inmuebles</li>
+          <li>I+D+i</li>
+          <li>Contratación</li>
+          <li>Operadores ferroviarios</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>PRENSA</h3>
+        <ul>
+          <li>Notas de Prensa</li>
+          <li>Avisos</li>
+          <li>Multimedia</li>
+          <li>Fotografía y trabajos audiovisuales</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>CONTACTO</h3>
+        <ul>
+          <li>(+34) 915 64 02 00</li>
+          <li>infoadif@adif.es</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
